@@ -11,7 +11,7 @@
           <span class="card-panel-num">222<span>人</span></span>
         </div>
       </li>
-      <li class="card-panel">
+      <li class="card-panel" @click="gotoPay()">
         <div class="card-panel-icon-wrapper icon-money">
           <svg-icon icon-class="money" class-name="card-panel-icon" />
         </div>
@@ -20,7 +20,7 @@
           <span class="card-panel-num">222<span>人</span></span>
         </div>
       </li>
-      <li class="card-panel">
+      <li class="card-panel" @click="gotoPass()">
         <div class="card-panel-icon-wrapper icon-pass">
           <svg-icon icon-class="pass" class-name="card-panel-icon" />
         </div>
@@ -34,23 +34,24 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
+// import { mapGetters } from 'vuex'
 export default {
   name: 'Dashboard',
   data() {
-
+    return {}
+  },
+  computed: {
   },
   methods: {
     gotoExamine() {
-      this.$router.push({ path: '/' })
+      this.$router.push({ path: '/examine/E1-StayApproval/StayApprovalFirst' })
+    },
+    gotoPay() {
+      this.$router.push({ path: '/pay/index' })
+    },
+    gotoPass() {
+      this.$router.push({ path: '/record/index' })
     }
-  },
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
   }
 }
 </script>

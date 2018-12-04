@@ -41,13 +41,13 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/examine/E1-StayApproval',
     name: 'Examine',
-    meta: {title: '申请审批',icon: 'component'},
+    meta: { title: '申请审批', icon: 'component' },
     children: [
       {
         path: 'E1-StayApproval',
         component: () => import('@/views/examine/E1-StayApproval/index'), // Parent router-view
         name: 'E1-StayApproval',
-        meta: { title: '待审批记录',icon: 'form' },
+        meta: { title: '待审批记录', icon: 'form' },
         children: [
           {
             path: 'StayApprovalFirst',
@@ -59,14 +59,14 @@ export const constantRouterMap = [
             path: 'StayApprovalMore',
             component: () => import('@/views/examine/E1-StayApproval/StayApprovalMore'),
             name: 'StayApprovalMore',
-            meta: { title: '再审' },
+            meta: { title: '再审' }
           }
         ]
       },
       {
         path: 'E2-ApprovalComplete',
         component: () => import('@/views/examine/E2-ApprovalComplete/index'),
-        meta: { title: '已通过审批',icon: 'chart' }
+        meta: { title: '已通过审批', icon: 'chart' }
       }
     ]
   },
@@ -79,7 +79,7 @@ export const constantRouterMap = [
         name: 'pay',
         component: () => import('@/views/pay/index'),
         meta: { title: '缴费凭据审核', icon: 'pay' }
-      },
+      }
     ]
   },
   {
@@ -91,7 +91,7 @@ export const constantRouterMap = [
         name: 'record',
         component: () => import('@/views/record/index'),
         meta: { title: '已通过审核', icon: 'true' }
-      },
+      }
     ]
   },
   {
@@ -103,7 +103,7 @@ export const constantRouterMap = [
         name: 'set',
         component: () => import('@/views/set/index'),
         meta: { title: '设置', icon: 'set' }
-      },
+      }
     ]
   },
   {

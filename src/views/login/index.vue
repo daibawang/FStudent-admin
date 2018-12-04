@@ -88,9 +88,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$axios({
-            method: 'post',
-            url: this.$URL + 'UserServlet',
+          this.$axios.post(this.$URL + 'UserServlet', {
             params: {
               username: this.loginForm.username,
               password: this.loginForm.password
@@ -105,7 +103,7 @@ export default {
               this.$router.push({ path: '/' })
             }
             console.log(response.data)
-          }).catch((error) => {
+          }).catch(() => {
             this.loading = false
             this.$alert('您的网络状态不好，请稍后再试/', 'Error', {
               confirmButtonText: this.confirmTitle
@@ -158,7 +156,6 @@ $light_gray:#eee;
     color: #454545;
   }
 }
-
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
