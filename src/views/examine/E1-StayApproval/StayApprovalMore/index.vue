@@ -22,40 +22,40 @@
               <span>{{ props.row.englishscore }}</span>
             </el-form-item>
             <el-form ref="Achievements" :inline="true" :model="props.row.Achievements" class="demo-dynamic" style="margin-bottom:15px">
-              <div v-for="(item, index) in props.row.Achievements.domains" :key="i">
+              <div v-for="(item, index) in props.row.Xs" :key="i">
                 <el-form-item
-                  :prop="'domains.'+index+'.papers'"
+                  :prop="'Xs.'+index+'.papers'"
                   label="论文题目"
                   style="margin-top:10px;">
                   <el-input v-model="item.papers" readonly style="width:320px;" clearable />
                 </el-form-item>
-                <el-form-item :prop="'domains.'+index+'.time'" label="发表时间" style="margin-top:10px;">
+                <el-form-item :prop="'Xs.'+index+'.time'" label="发表时间" style="margin-top:10px;">
                   <el-date-picker v-model="item.time" readonly style="width:320px;" value-format="yyyyMM" type="month" placeholder="from" />
                 </el-form-item>
               </div>
             </el-form>
             <el-form ref="WorkForm" :inline="true" :model="props.row.WorkForm" class="demo-dynamic">
-              <div v-for="(item, index) in props.row.WorkForm.domains" :key="j" class="WorkForm_border">
+              <div v-for="(item, index) in props.row.Work" :key="j" class="WorkForm_border">
                 <el-form-item label="工作时间" style="margin-top:20px;" >
                   <el-col :span="11">
-                    <el-form-item :prop="'domains.'+index+'.btime'">
+                    <el-form-item :prop="'Work.'+index+'.btime'">
                       <el-date-picker v-model="item.btime" readonly style="width:130px;" value-format="yyyyMM" type="month" placeholder="from"/>
                     </el-form-item>
                   </el-col>
                   <el-col :span="11">
-                    <el-form-item :prop="'domains.'+index+'.ltime'">
+                    <el-form-item :prop="'Work.'+index+'.ltime'">
                       <el-date-picker v-model="item.ltime" readonly value-format="yyyyMM" style="width:130px;margin-left:30px;" type="month" placeholder="to" />
                     </el-form-item>
                   </el-col>
                 </el-form-item>
                 <el-form-item
-                  :prop="'domains.'+index+'.unit'"
+                  :prop="'Work.'+index+'.unit'"
                   style="margin-top:20px;"
                   label="工作单位"
                   class="">
                   <el-input v-model="item.unit" readonly clearable style="width:320px;" />
                 </el-form-item>
-                <el-form-item :prop="'domains.'+index+'.obj'" style="margin-top:10px;" label="工作职位">
+                <el-form-item :prop="'Work.'+index+'.obj'" style="margin-top:10px;" label="工作职位">
                   <el-input v-model="item.obj" readonly clearable style="width:320px;" />
                 </el-form-item>
               </div>
@@ -74,10 +74,10 @@
         prop="nationality"/>
       <el-table-column
         label="毕业院校"
-        prop="studyschool"/>
+        prop="unit"/>
       <el-table-column
         label="专业"
-        prop="fields"/>
+        prop="obj"/>
       <el-table-column label="操作" width="250">
         <template slot-scope="scope">
           <a href="http://www.istuadmission.com/FStudent/Attachment_Overseas_Remittance_ofForeign_Exchange.zip">
@@ -102,7 +102,7 @@
     <div class="Pagination">
       <el-pagination
         :current-page="currentPage"
-        :page-size="3"
+        :page-size="8"
         :total="count"
         background
         layout="total, prev, pager, next"
@@ -130,159 +130,25 @@ export default{
       approvalInput: '',
       dialogIndex: '',
       currentPage: 1,
-      limit: 3,
+      offset: 0,
+      limit: 8,
       count: 10,
-      tableData: [{
-        date: '2016-05-02',
-        username: 'zmj1',
-        name: '王小虎',
-        date_birth: '19971130',
-        religion: '佛教',
-        nationality: '中国',
-        studyschool: '北京城市学院',
-        fields: '软件工程',
-        englishscore: 'TOEFL666',
-        count: '5',
-        approvalTime: '2018-10-11',
-        message: `通过设置 type="expand" 和 Scoped slot 可以开启展开行功能，
-        el-table-column 的模板会被渲染成为展开板时Scoped slot 相同。的 Scoped slot 相同通过设置 type="expand" 和 Scoped slot 可以开启展开行功能，
-        el-table-column 的模板会被渲染成为展开板时Scoped slot 相同。的 Scoped slot 相同通过设置 type="expand" 和 Scoped slot 可以开启展开行功能，
-        el-table-column 的模板会被渲染成为展开板时Scoped slot 相同。的 Scoped slot 相同.`,
-        Achievements: {
-          domains: [{
-            time: '201809',
-            papers: '一个信仰1111111'
-          }, {
-            time: '201809',
-            papers: '一个信仰11111111'
-          }]
-        },
-        WorkForm: {
-          domains: [{
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }, {
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }]
-        },
-        works: '201809-201909北京城市学院11111',
-        address: '上海市普陀区金沙江路 1518 弄11111'
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        username: 'zmj2',
-        date_birth: '19971130',
-        religion: '佛教',
-        nationality: '中国',
-        studyschool: '北京城市学院',
-        fields: '软件工程',
-        englishscore: 'TOEFL666',
-        Achievements: {
-          domains: [{
-            time: '201809',
-            papers: '一个信仰'
-          }, {
-            time: '201809',
-            papers: '一个信仰'
-          }]
-        },
-        WorkForm: {
-          domains: [{
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }, {
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }]
-        },
-        works: '201809-201909北京城市学院',
-        address: '上海市普陀区金沙江路 1518 弄'
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        username: 'zmj3',
-        date_birth: '19971130',
-        religion: '佛教',
-        nationality: '中国',
-        studyschool: '北京城市学院',
-        fields: '软件工程',
-        englishscore: 'TOEFL666',
-        Achievements: {
-          domains: [{
-            time: '201809',
-            papers: '一个信仰'
-          }, {
-            time: '201809',
-            papers: '一个信仰'
-          }]
-        },
-        WorkForm: {
-          domains: [{
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }, {
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }]
-        },
-        works: '201809-201909北京城市学院',
-        address: '上海市普陀区金沙江路 1518 弄'
-      },
-      {
-        date: '2016-05-02',
-        name: '王小虎',
-        date_birth: '19971130',
-        religion: '佛教',
-        username: 'zmj4',
-        nationality: '中国',
-        studyschool: '北京城市学院',
-        fields: '软件工程',
-        englishscore: 'TOEFL666',
-        Achievements: {
-          domains: [{
-            time: '201809',
-            papers: '一个信仰'
-          }, {
-            time: '201809',
-            papers: '一个信仰'
-          }]
-        },
-        WorkForm: {
-          domains: [{
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }, {
-            unit: '北京城市学院北京城市学院北京城市学院北京城市学院北京城市学院',
-            btime: '201709',
-            ltime: '201809',
-            obj: '吱吱吱吱开发'
-          }]
-        },
-        works: '201809-201909北京城市学院',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }
-
-      ]
+      tableData: []
     }
   },
+  created: function() {
+    this.initData()
+  },
   methods: {
+    initData() {
+      this.$axios.get(this.$URL + 'GetCountServlet', {
+        params: {}
+      }).then((response) => {
+        this.count = parseInt(response.data)
+        this.getRecord()
+      }).catch(() => {
+      })
+    },
     handlepass(index, row) {
       // console.log(index)
       // console.log(row.username)
@@ -311,23 +177,34 @@ export default{
       console.log(`每页 ${val} 条`)
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.offset = (val - 1) * this.limit
-      this.getFoods()
-    },
-    handleCurrentChange(val) {
       this.currentPage = val // 当前页数
       this.offset = (val - 1) * this.limit // 第几条开始
       this.getRecord()
     },
     getRecord() {
-      this.$axios.get(this.$URL + '', {
+      this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
-          offset: this.offset,
-          limit: this.limit
+          firstL: this.offset,
+          lastL: this.limit
         }
       }).then((response) => {
-
+        this.tableData = response.data
+        for (var i = 0; i < this.tableData.length; i++) {
+          this.tableData[i].count = 5
+          this.tableData[i].approvalTime = '2018-10-15'
+          this.tableData[i].message = '通过设置和 Scoped slot 可以开启展开行功能'
+          this.tableData[i].date_birth = response.data[i].date_birth.substr(0, 4) + '-' + response.data[i].date_birth.substr(4, 2) + '-' + response.data[i].date_birth.substr(6, 2)
+          this.tableData[i].papersExport = ''
+          for (var j = 0; j < response.data[i].Xs.length; j++) {
+            this.tableData[i].papersExport += (j + 1) + '、' + response.data[i].Xs[j].papers + '/' + response.data[i].Xs[j].time.substr(0, 4) + '年' + response.data[i].Xs[j].time.substr(4, 2) + '月' + '\n'
+          }
+          this.tableData[i].workExport = ''
+          for (var t = 0; t < response.data[i].Work.length; t++) {
+            this.tableData[i].workExport += (t + 1) + '、' + response.data[i].Work[t].btime + '-' + response.data[i].Work[t].ltime + '单位' + response.data[i].Work[t].unit + '职位：' + response.data[i].Work[t].obj + '\n'
+          }
+          j = 0
+          t = 0
+        }
       }).catch(() => {
 
       })
