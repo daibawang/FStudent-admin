@@ -163,6 +163,7 @@ export default{
         // this.specs.splice(index, 1);
         console.log(row.username)
       }).catch(() => {
+
         // this.$message({
         //   type: 'info',
         //   message: '已取消删除'
