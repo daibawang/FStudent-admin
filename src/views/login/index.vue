@@ -88,7 +88,9 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$axios.post(this.$URL + 'UserServlet', {
+          this.$axios({
+            method: 'post',
+            url: this.$URL + '/UserServlet',
             params: {
               username: this.loginForm.username,
               password: this.loginForm.password

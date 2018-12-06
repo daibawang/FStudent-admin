@@ -13,7 +13,7 @@
               <span>{{ props.row.level_e }}</span>
             </el-form-item>
             <el-form ref="Achievements" :inline="true" :model="props.row.Achievements" class="demo-dynamic" style="margin-bottom:15px">
-              <div v-for="(item, index) in props.row.Xs" :key="i">
+              <div v-for="(item, index) in props.row.Xs" :key="index.username">
                 <el-form-item
                   :prop="'Xs.'+index+'.papers'"
                   label="论文题目"
@@ -26,7 +26,7 @@
               </div>
             </el-form>
             <el-form ref="WorkForm" :inline="true" :model="props.row.WorkForm" class="demo-dynamic">
-              <div v-for="(item, index) in props.row.Work" :key="j" class="WorkForm_border">
+              <div v-for="(item, index) in props.row.Work" :key="index.username" class="WorkForm_border">
                 <el-form-item label="工作时间" style="margin-top:20px;" >
                   <el-col :span="11">
                     <el-form-item :prop="'Work.'+index+'.btime'">
@@ -197,16 +197,16 @@ export default{
         this.tableData = response.data
         for (var i = 0; i < this.tableData.length; i++) {
           this.tableData[i].date_birth = response.data[i].date_birth.substr(0, 4) + '-' + response.data[i].date_birth.substr(4, 2) + '-' + response.data[i].date_birth.substr(6, 2)
-          this.tableData[i].papersExport = ''
-          for (var j = 0; j < response.data[i].Xs.length; j++) {
-            this.tableData[i].papersExport += (j + 1) + '、' + response.data[i].Xs[j].papers + '/' + response.data[i].Xs[j].time.substr(0, 4) + '年' + response.data[i].Xs[j].time.substr(4, 2) + '月' + '\n'
-          }
-          this.tableData[i].workExport = ''
-          for (var t = 0; t < response.data[i].Work.length; t++) {
-            this.tableData[i].workExport += (t + 1) + '、' + response.data[i].Work[t].btime + '-' + response.data[i].Work[t].ltime + '单位' + response.data[i].Work[t].unit + '职位：' + response.data[i].Work[t].obj + '\n'
-          }
-          j = 0
-          t = 0
+          // this.tableData[i].papersExport = ''
+          // for (var j = 0; j < response.data[i].Xs.length; j++) {
+          //   this.tableData[i].papersExport += (j + 1) + '、' + response.data[i].Xs[j].papers + '/' + response.data[i].Xs[j].time.substr(0, 4) + '年' + response.data[i].Xs[j].time.substr(4, 2) + '月' + '\n'
+          // }
+          // this.tableData[i].workExport = ''
+          // for (var t = 0; t < response.data[i].Work.length; t++) {
+          //   this.tableData[i].workExport += (t + 1) + '、' + response.data[i].Work[t].btime + '-' + response.data[i].Work[t].ltime + '单位' + response.data[i].Work[t].unit + '职位：' + response.data[i].Work[t].obj + '\n'
+          // }
+          // j = 0
+          // t = 0
         }
       }).catch(() => {
 
