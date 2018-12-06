@@ -136,7 +136,8 @@ export default{
       this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
           firstL: 0,
-          lastL: this.count
+          lastL: this.count,
+          typ: 15
         }
       }).then((response) => {
         this.tableDataAll = response.data
@@ -187,7 +188,8 @@ export default{
       this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
           firstL: this.offset,
-          lastL: this.limit
+          lastL: this.limit,
+          typ: 15
         }
       }).then((response) => {
         this.tableData = response.data

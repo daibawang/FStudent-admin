@@ -90,7 +90,7 @@ export default {
           this.loading = true
           this.$axios({
             method: 'post',
-            url: this.$URL + '/UserServlet',
+            url: this.$URL + 'UserServlet',
             params: {
               username: this.loginForm.username,
               password: this.loginForm.password

@@ -10,10 +10,10 @@
               <span>{{ props.row.count }}次</span>
             </el-form-item>
             <el-form-item label="上次审批时间" style="color:#2F88EE">
-              <span>{{ props.row.approvalTime }}</span>
+              <span>{{ props.row.time }}</span>
             </el-form-item>
             <el-form-item label="上次审批意见" style="width:83%;text-align: justify;color:#2F88EE">
-              <span style="">{{ props.row.message }}</span>
+              <span style="">{{ props.row.massgae }}</span>
             </el-form-item>
             <el-form-item label="宗教信仰" style="margin-top:10px;margin-bottom:10px">
               <span>{{ props.row.religion }}</span>
@@ -123,6 +123,7 @@
   </div>
 </template>
 <script>
+import { formatDate } from '@/utils/formatDate.js'
 export default{
   data() {
     return {
@@ -151,17 +152,26 @@ export default{
     },
     handlepass(index, row) {
       // console.log(index)
-      // console.log(row.username)
       this.$confirm('确定通过这条记录吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        console.log(row.username)
+        this.$axios.get(this.$URL + 'ChangExServlet', {
+          params: {
+            username: row.username,
+            state: '审核通过'
+          }
+        }).then((response) => {
+          console.log(response.data)
+          if (response.data == true) {
+            this.getRecord()
+          }
+          this.$alert('已通过该条申请', {
+            confirmButtonText: 'sure'
+          })
+        }).catch(() => {
+        })
       }).catch(() => {
-        // this.$message({
-        //   type: 'info',
-        //   message: '已取消删除'
-        // })
       })
     },
     addapproval() {
@@ -182,28 +192,17 @@ export default{
       this.getRecord()
     },
     getRecord() {
-      this.$axios.get(this.$URL + 'ExclAllServlet', {
+      this.$axios.get(this.$URL + 'GetSecondServlet', {
         params: {
           firstL: this.offset,
           lastL: this.limit
         }
       }).then((response) => {
         this.tableData = response.data
+        console.log(this.tableData)
         for (var i = 0; i < this.tableData.length; i++) {
-          this.tableData[i].count = 5
-          this.tableData[i].approvalTime = '2018-10-15'
-          this.tableData[i].message = '通过设置和 Scoped slot 可以开启展开行功能'
-          this.tableData[i].date_birth = response.data[i].date_birth.substr(0, 4) + '-' + response.data[i].date_birth.substr(4, 2) + '-' + response.data[i].date_birth.substr(6, 2)
-          // this.tableData[i].papersExport = ''
-          // for (var j = 0; j < response.data[i].Xs.length; j++) {
-          //   this.tableData[i].papersExport += (j + 1) + '、' + response.data[i].Xs[j].papers + '/' + response.data[i].Xs[j].time.substr(0, 4) + '年' + response.data[i].Xs[j].time.substr(4, 2) + '月' + '\n'
-          // }
-          // this.tableData[i].workExport = ''
-          // for (var t = 0; t < response.data[i].Work.length; t++) {
-          //   this.tableData[i].workExport += (t + 1) + '、' + response.data[i].Work[t].btime + '-' + response.data[i].Work[t].ltime + '单位' + response.data[i].Work[t].unit + '职位：' + response.data[i].Work[t].obj + '\n'
-          // }
-          // j = 0
-          // t = 0
+          this.tableData[i].date_birth = this.tableData[i].date_birth.substr(0, 4) + '-' + this.tableData[i].date_birth.substr(4, 2) + '-' + this.tableData[i].date_birth.substr(6, 2)
+          this.tableData[i].time = formatDate(new Date(this.tableData[i].time * 1), 'yyyy-MM-dd hh:mm')
         }
       }).catch(() => {
 

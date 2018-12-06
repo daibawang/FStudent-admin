@@ -127,6 +127,7 @@ export default{
     return {
       approvalInput: '',
       dialogIndex: '',
+      changusername: '',
       dialogFormVisible: false,
       currentPage: 1,
       offset: 0,
@@ -137,7 +138,8 @@ export default{
       bookType: 'xlsx',
       downloadLoading: false,
       tableData: [],
-      tableDataAll: []
+      tableDataAll: [],
+      approvalInput: ''
     }
   },
   created: function() {
@@ -160,34 +162,27 @@ export default{
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        // this.$axios.get(this.$URL + 'ChangExServlet', {
-        //   params: {
-        //     username:row.username
-        //   }
-        // }).then((response) => {
-        //   this.count = parseInt(response.data)
-        //   this.getRecord()
-        // }).catch(() => {
-        // })
-        // this.specs.splice(index, 1);
-        console.log(row.username)
+        this.$axios.get(this.$URL + 'JfPassServlet', {
+          params: {
+            username: row.username
+          }
+        }).then((response) => {
+          this.count = parseInt(response.data)
+          this.getRecord()
+        }).catch(() => {
+        })
       }).catch(() => {
-
-        // this.$message({
-        //   type: 'info',
-        //   message: '已取消删除'
-        // })
       })
     },
     handleDownload() {
       this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
           firstL: 0,
-          lastL: this.count
+          lastL: this.count,
+          typ: 17
         }
       }).then((response) => {
         this.tableDataAll = response.data
-
         for (var i = 0; i < this.tableDataAll.length; i++) {
           this.tableDataAll[i].Payfilename = this.tableDataAll[i].username + '_' + this.tableDataAll[i].name + '_' + '缴费凭据.jpg'
           this.tableDataAll[i].date_birth = response.data[i].date_birth.substr(0, 4) + '-' + response.data[i].date_birth.substr(4, 2) + '-' + response.data[i].date_birth.substr(6, 2)
@@ -220,13 +215,33 @@ export default{
       }).catch(() => {
       })
     },
-    addapproval() {
-      console.log('dialogForm' + this.dialogIndex)
-      this.dialogFormVisible = false
-    },
+
     handleEdit(index, row) {
       this.dialogIndex = row.username
       this.dialogFormVisible = true
+      this.changusername = row.username
+    },
+    addapproval() {
+      this.dialogFormVisible = false
+      this.$axios.get(this.$URL + 'JfNopassServlet', {
+        params: {
+          username: this.changusername,
+          massage: this.approvalInput
+        }
+      }).then((response) => {
+        console.log(response.data)
+        if (response.data == true) {
+          this.getRecord()
+        } else {
+          this.$alert('审核失败', {
+            confirmButtonText: 'sure'
+          })
+        }
+      }).catch(() => {
+
+      })
+      console.log('dialogForm' + this.dialogIndex)
+      this.dialogFormVisible = false
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => v[j]))
@@ -244,7 +259,8 @@ export default{
       this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
           firstL: this.offset,
-          lastL: this.limit
+          lastL: this.limit,
+          typ: 17
         }
       }).then((response) => {
         this.tableData = response.data

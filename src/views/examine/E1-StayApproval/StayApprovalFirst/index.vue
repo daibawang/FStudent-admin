@@ -124,6 +124,7 @@ export default{
       offset: 0,
       limit: 8,
       count: null,
+      changusername: '',
       tableData: [{
         papersExport: '',
         workExport: ''
@@ -146,22 +147,25 @@ export default{
     },
     handlepass(index, row) {
       // console.log(index)
-      // console.log(row.username)
       this.$confirm('确定通过这条记录吗？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(() => {
-        // this.$axios.get(this.$URL + 'ChangExServlet', {
-        //   params: {
-        //     username:row.username
-        //   }
-        // }).then((response) => {
-        //   this.count = parseInt(response.data)
-        //   this.getRecord()
-        // }).catch(() => {
-        // })
-        // this.specs.splice(index, 1);
-        console.log(row.username)
+        this.$axios.get(this.$URL + 'ChangExServlet', {
+          params: {
+            username: row.username,
+            state: '审核通过'
+          }
+        }).then((response) => {
+          console.log(response.data)
+          if (response.data == true) {
+            this.getRecord()
+          }
+          this.$alert('已通过该条申请', {
+            confirmButtonText: 'sure'
+          })
+        }).catch(() => {
+        })
       }).catch(() => {
 
         // this.$message({
@@ -170,13 +174,33 @@ export default{
         // })
       })
     },
-    addapproval() {
-      console.log('dialogForm' + this.dialogIndex)
-      this.dialogFormVisible = false
-    },
+    // 不通过
     handleEdit(index, row) {
       this.dialogIndex = row.username
       this.dialogFormVisible = true
+      this.changusername = row.username
+    },
+    addapproval() {
+      const thistime = new Date().getTime()
+      this.dialogFormVisible = false
+      this.$axios.get(this.$URL + 'NoPassServlet', {
+        params: {
+          username: this.changusername,
+          massage: this.approvalInput,
+          time: thistime
+        }
+      }).then((response) => {
+        console.log(response.data)
+        if (response.data == true) {
+          this.getRecord()
+        } else {
+          this.$alert('审核失败', {
+            confirmButtonText: 'sure'
+          })
+        }
+      }).catch(() => {
+
+      })
     },
     // 分页
     handleSizeChange(val) {
@@ -191,7 +215,8 @@ export default{
       this.$axios.get(this.$URL + 'ExclAllServlet', {
         params: {
           firstL: this.offset,
-          lastL: this.limit
+          lastL: this.limit,
+          typ: 12
         }
       }).then((response) => {
         this.tableData = response.data
